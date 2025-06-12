@@ -1,20 +1,32 @@
 package uno
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/gorilla/websocket"
 )
 
 
 func WS(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Received request:", r.Method, r.URL.Path)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	response := `{"message": "Hello, WS!"}`
-	_, err := w.Write([]byte(response))
+	var upgrader = websocket.Upgrader{}
+		c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		log.Print("upgrade:", err)
 		return
 	}
-	fmt.Println("Response sent successfully")
+	defer c.Close()
+	for {
+		mt, message, err := c.ReadMessage()
+		if err != nil {
+			log.Println("read:", err)
+			break
+		}
+		log.Printf("recv: %s", message)
+		err = c.WriteMessage(mt, message)
+		if err != nil {
+			log.Println("write:", err)
+			break
+		}
+	}
 }
