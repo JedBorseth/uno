@@ -1,4 +1,4 @@
-module jedborseth/uno
+module uno
 
 go 1.23.4
 

@@ -1,4 +1,4 @@
-package uno
+package api
 
 import (
 	"fmt"
@@ -14,6 +14,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
-	}
+	} 
 	fmt.Println("Response sent successfully")
 }
