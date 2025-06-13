@@ -15,7 +15,7 @@ function App() {
     };
 
     socket.onerror = function (error) {
-      console.error("WebSocket error:", error);
+      console.error("WebSocket error:", error, socket);
     };
   }, []);
 
