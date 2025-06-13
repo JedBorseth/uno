@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    const socket = new WebSocket(`ws://${window.location.host}/api/ws`);
+    const socket = new WebSocket(`wss://${window.location.host}/api/ws`);
     console.log("Connecting to WebSocket...", socket);
 
     socket.onopen = function () {
